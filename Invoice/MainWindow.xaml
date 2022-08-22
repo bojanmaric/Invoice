@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Invoice"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
+        <Label Content="FIle" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtFile" HorizontalAlignment="Left" Margin="43,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="251" IsEnabled="False"/>
+        <Button x:Name="btnFile" Content="..." HorizontalAlignment="Left" Margin="308,13,0,0" VerticalAlignment="Top" Width="36"/>
 
     </Grid>
 </Window>
