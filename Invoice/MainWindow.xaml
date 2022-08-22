@@ -5,11 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Invoice"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="581" Width="992" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Label Content="FIle" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtFile" HorizontalAlignment="Left" Margin="43,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="251" IsEnabled="False"/>
-        <Button x:Name="btnFile" Content="..." HorizontalAlignment="Left" Margin="308,13,0,0" VerticalAlignment="Top" Width="36"/>
+        <Label Content="FIle" HorizontalAlignment="Left" Margin="5,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.347,0.537"/>
+        <TextBox x:Name="txtFile" HorizontalAlignment="Left" Margin="38,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="87" IsEnabled="False" Height="27"/>
+        <Button x:Name="btnFile" Content="..." HorizontalAlignment="Left" Margin="142,46,0,0" VerticalAlignment="Top" Width="47" Height="27"/>
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="38,283,38,32"/>
+        <Label Content="Šifra artikla" HorizontalAlignment="Left" Margin="48,108,0,0" VerticalAlignment="Top" Width="84"/>
+        <TextBox x:Name="txtSifraArtikla" HorizontalAlignment="Left" Margin="30,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="123" Height="22"/>
+        <TextBox x:Name="txtNazivArtikla" HorizontalAlignment="Left" Margin="180,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="222" Height="22"/>
+        <Label Content="Naziv artikla" HorizontalAlignment="Left" Margin="254,108,0,0" VerticalAlignment="Top"/>
+        <Label Content="%PDV" HorizontalAlignment="Left" Margin="629,99,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.54,0.533"/>
+        <ComboBox x:Name="cmbPDV" HorizontalAlignment="Left" Margin="624,130,0,0" VerticalAlignment="Top" Width="52"/>
+        <Label Content="J/M" HorizontalAlignment="Left" Margin="434,103,0,0" VerticalAlignment="Top" Height="25" RenderTransformOrigin="0.451,1.226"/>
+        <ComboBox x:Name="cmbJedinicaMere" HorizontalAlignment="Left" Margin="434,130,0,0" VerticalAlignment="Top" Width="30"/>
+        <Label Content="Količina" HorizontalAlignment="Left" Margin="513,103,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtKolicina" HorizontalAlignment="Left" Margin="483,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="23"/>
+        <TextBox x:Name="txtUkupno" HorizontalAlignment="Left" Margin="650,246,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="txtNetoUkupno" HorizontalAlignment="Left" Margin="650,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtPdvUkupno" HorizontalAlignment="Left" Margin="650,223,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Neto:" HorizontalAlignment="Left" Margin="603,193,0,0" VerticalAlignment="Top"/>
+        <Label Content="PDV Ukupno:" HorizontalAlignment="Left" Margin="564,215,0,0" VerticalAlignment="Top"/>
+        <Label Content="Bruto:" HorizontalAlignment="Left" Margin="603,241,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
