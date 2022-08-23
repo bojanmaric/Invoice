@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Invoice"
         mc:Ignorable="d"
-        Title="KREIRANJE PONUDE" Height="763" Width="935" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Icon="/offers-icon-24.png">
+        Title="KREIRANJE PONUDE" Height="693" Width="935" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Icon="/offers-icon-24.png">
     <Window.FocusVisualStyle>
         <Style/>
     </Window.FocusVisualStyle>
