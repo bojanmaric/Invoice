@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
+
+
 namespace Invoice
 {
     /// <summary>
@@ -21,21 +23,21 @@ namespace Invoice
     /// 
     public class Article
     {
-        public int idArt { get; set; }
+        public string idArt { get; set; }
         public string nameArt { get; set; }
 
         public string measureUnit { get; set; }
-        public double quatity { get; set; }
+        public string quatity { get; set; }
 
-        public double price { get; set; }
+        public string price { get; set; }
 
-        public double priceWithoutPDV { get; set; }
-        public int pdvLevel { get; set; }
+        public string priceWithoutPDV { get; set; }
+        public string pdvLevel { get; set; }
 
-        public double pdv { get; set; }
+        public string pdv { get; set; }
        
 
-        public double sumPrice { get; set; }
+        public string sumPrice { get; set; }
 
     }
     public class Customer
@@ -46,49 +48,32 @@ namespace Invoice
 
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-        DataTable dt=new DataTable();
-        public List<Article> articles=new List<Article>();
+        DataTable dt;
+        public List<Article> articles= new List<Article>();
+          
         public Customer customer = new Customer();
-        
+
         public string dateCreate { get; set; }
 
         public string dateDelivery { get; set; }
 
         public string nameOfInvoice { get; set; }
+        
 
-
-        private void btnAddCell_Click(object sender, RoutedEventArgs e)
+        public MainWindow()
         {
-            articles.Add(new Article()
-            {
-                idArt = 1,
-                nameArt="naziv",
-                quatity=5,
-                price=100,
-                pdv=20
-               
-            });
-           
-
-
-        }
-
-        public void displayData()
-        {
+            InitializeComponent();
 
         }
 
         private void winmain_Initialized(object sender, EventArgs e)
         {
 
-            dt.Columns.Add("Rbr");
+            dt = new DataTable();
+
             dt.Columns.Add("Šifra");
             dt.Columns.Add("Naziv");
-            dt.Columns.Add("J.M");
+            dt.Columns.Add("J-M");
             dt.Columns.Add("Količina");
             dt.Columns.Add("Cena po jedinici");
             dt.Columns.Add("Poreska osnovica");
@@ -96,13 +81,51 @@ namespace Invoice
             dt.Columns.Add("Iznos PDV");
             dt.Columns.Add("Ukupna naknada");
 
+            dataGridInvoice.ItemsSource = dt.DefaultView;
 
+            cmbMeasureUnit.Items.Add("m");
+            cmbMeasureUnit.Items.Add("kom");
+            cmbMeasureUnit.Text = "kom";
 
+            cmbPDV.Items.Add("20");
+            cmbPDV.Items.Add("10");
+            cmbPDV.Text = "20";
 
-
-
-
-            dataGridInvoice.ItemsSource = articles;
         }
+
+        private void btnAddCell_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtNameArt.Text != "" && txtQuantity.Text != ""
+                && txtPriceArt.Text != "" && cmbPDV.SelectedValue.ToString() != "")
+            {
+                displayData();
+            }
+            else
+            {
+                MessageBox.Show("Morate popuniti sva polja!","Greška", MessageBoxButton.OK,MessageBoxImage.Error);
+            }
+
+
+        }
+
+        public void displayData()
+        {
+            DataRow dr = dt.NewRow();
+
+            dr[0] = txtIDArticle.Text;
+            dr[1] = txtNameArt.Text;
+            dr[2] = cmbMeasureUnit.SelectedValue.ToString();
+            dr[3] = txtQuantity.Text;
+            dr[4] = txtPriceArt.Text;
+            dr[5] = txtValueOfPDV.Text;//poreska osnovica
+            dr[6] = cmbPDV.SelectedValue.ToString();
+            dr[7] = txtValueOfPDV.Text;
+            dr[8] = txtSumOfCell.Text;
+
+            dt.Rows.Add(dr);
+
+        }
+
+       
     }
 }
