@@ -29,15 +29,15 @@ namespace Invoice
         public string measureUnit { get; set; }
         public string quatity { get; set; }
 
-        public string price { get; set; }
+        public string netoPrice { get; set; }
 
-        public string priceWithoutPDV { get; set; }
+        public string poreskaOsnovica { get; set; }
         public string pdvLevel { get; set; }
 
         public string pdv { get; set; }
        
 
-        public string sumPrice { get; set; }
+        public string brtoPrice { get; set; }
 
     }
     public class Customer
@@ -110,6 +110,20 @@ namespace Invoice
 
         public void displayData()
         {
+            articles.Add(new Article() {
+                idArt=txtIDArticle.Text,
+                nameArt=txtNameArt.Text,
+                measureUnit=cmbMeasureUnit.SelectedValue.ToString(),
+                quatity=txtQuantity.Text,
+                netoPrice=txtPriceArt.Text,
+                poreskaOsnovica=txtPoreskaOsnovica.Text,
+                pdvLevel=cmbPDV.SelectedValue.ToString(),
+                pdv=txtValueOfPDV.Text,
+                brtoPrice=txtSumOfCell.Text,
+
+            });
+
+
             DataRow dr = dt.NewRow();
 
             dr[0] = txtIDArticle.Text;
@@ -117,7 +131,7 @@ namespace Invoice
             dr[2] = cmbMeasureUnit.SelectedValue.ToString();
             dr[3] = txtQuantity.Text;
             dr[4] = txtPriceArt.Text;
-            dr[5] = txtValueOfPDV.Text;//poreska osnovica
+            dr[5] = txtPoreskaOsnovica.Text;//poreska osnovica
             dr[6] = cmbPDV.SelectedValue.ToString();
             dr[7] = txtValueOfPDV.Text;
             dr[8] = txtSumOfCell.Text;
