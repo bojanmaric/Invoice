@@ -14,6 +14,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 
+using System.IO;
+using SpreadsheetLight;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml;
+using GemBox.Spreadsheet;
+
 
 namespace Invoice
 {
@@ -66,6 +72,7 @@ namespace Invoice
 
         }
 
+        //initialiye fields in the Gui part(grid view, combo boxs...)
         private void winmain_Initialized(object sender, EventArgs e)
         {
 
@@ -90,9 +97,10 @@ namespace Invoice
             cmbPDV.Items.Add("20");
             cmbPDV.Items.Add("10");
             cmbPDV.Text = "20";
+            
 
         }
-
+        //Fuction where we check are all nessesary fields filled if it is all correct display data in grid
         private void btnAddCell_Click(object sender, RoutedEventArgs e)
         {
             if (txtNameArt.Text != "" && txtQuantity.Text != ""
@@ -107,7 +115,7 @@ namespace Invoice
 
 
         }
-
+        //function where we need to add new article in list and also add new row in data grid
         public void displayData()
         {
             articles.Add(new Article() {
@@ -140,6 +148,50 @@ namespace Invoice
 
         }
 
-       
+        //Funcition where we create Invoice and fill header cells in template.xlsx
+        //and copy data from dataGrid to place which is planned to be fill with articles
+        private void btnCreateOffer_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            if (txtDateCreate.SelectedDate != null && txtDateDelivery.SelectedDate != null
+                && txtUniqueNameOfInvoice.Text != "" && txtCustomerName.Text != "" && txtPIBCustomer.Text != "")
+            {
+
+
+                SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+                var workbook = ExcelFile.Load("template.xlsx");
+
+                var worksheet = workbook.Worksheets[0];
+
+
+                //data of customer
+
+                worksheet.Cells["G11"].Value = txtCustomerName.Text;
+                worksheet.Cells["G12"].Value = txtAdressCustomer.Text;
+                worksheet.Cells["G13"].Value = txtCityPlaceCustomer.Text;
+                worksheet.Cells["G14"].Value = txtPIBCustomer.Text;
+
+                //data for header of invoice
+                worksheet.Cells["D8"].Value = txtDateCreate.SelectedDate.Value.Date.ToString("dd-MM-yyyy");
+                worksheet.Cells["D9"].Value = txtDateCreate.SelectedDate.Value.Date.ToString("dd-MM-yyyy");
+                worksheet.Cells["D10"].Value = txtDateDelivery.SelectedDate.Value.Date.ToString("dd-MM-yyyy");
+                worksheet.Cells["F17"].Value = txtUniqueNameOfInvoice.Text;
+
+
+
+
+
+                workbook.Save($"../../../{txtCustomerName.Text}{DateTime.Now.ToString("HHmmssMMddyyyy")}.xlsx");
+
+                MessageBox.Show("Uspesno kreiran Račun","Obaveštenje", MessageBoxButton.OK,MessageBoxImage.Information);
+
+            }
+            else
+            {
+                MessageBox.Show("Niste uneli sva polja", "Greška",MessageBoxButton.OK,MessageBoxImage.Error);
+            }
+
+        }
     }
 }
