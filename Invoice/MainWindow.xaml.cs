@@ -141,7 +141,7 @@ namespace Invoice
             double poreskaOsnovica = Math.Round((price/((100+double.Parse(cmbPDV.SelectedValue.ToString()))/100))*double.Parse(txtQuantity.Text),2);
 
             double sumCell=Math.Round(price*double.Parse(txtQuantity.Text),2);
-            double pdvValue = sumCell-poreskaOsnovica;
+            double pdvValue = Math.Round(sumCell -poreskaOsnovica,2);
             //Math.round(value,2) to round valute to two decimal place
 
             articles.Add(new Article() {
@@ -213,6 +213,8 @@ namespace Invoice
                 //data of customer
 
                 worksheet.Cells["G11"].Value = txtCustomerName.Text;
+                worksheet.Cells["G11"].Style.WrapText = true;
+
                 worksheet.Cells["G12"].Value = txtAdressCustomer.Text;
                 worksheet.Cells["G13"].Value = txtCityPlaceCustomer.Text;
                 worksheet.Cells["G14"].Value = txtPIBCustomer.Text;
@@ -237,20 +239,35 @@ namespace Invoice
                     worksheet.Cells[$"B{21 + i}"].Value = articles[i].idArt;
                     //name of artilce
                     worksheet.Cells[$"C{21 + i}"].Value = articles[i].nameArt;
+
+                    worksheet.Cells[$"C{21 + i}"].Style.WrapText = true;
+
                     //Measure unit of articles
                     worksheet.Cells[$"D{21 + i}"].Value = articles[i].measureUnit;
                     //Quantitiy of articles
                     worksheet.Cells[$"E{21 + i}"].Value = articles[i].quatity;
+                    worksheet.Cells[$"E{21 + i}"].Style.HorizontalAlignment=HorizontalAlignmentStyle.Center; 
+
                     //price of article per one
                     worksheet.Cells[$"F{21 + i}"].Value = articles[i].price;
+                    worksheet.Cells[$"F{21 + i}"].Style.NumberFormat = "#,##0.00";
+
                     //poreska osnovica
                     worksheet.Cells[$"G{21 + i}"].Value = articles[i].poreskaOsnovica;
+                    worksheet.Cells[$"G{21 + i}"].Style.NumberFormat = "#,##0.00";
+
                     //rate PDV 
                     worksheet.Cells[$"H{21 + i}"].Value = articles[i].pdvLevel+"%";
+                    worksheet.Cells[$"H{21 + i}"].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+
                     //sum of pdv
                     worksheet.Cells[$"I{21 + i}"].Value = articles[i].pdvValue;
+                    worksheet.Cells[$"I{21 + i}"].Style.NumberFormat = "#,##0.00";
+
                     //Ammount of product 
                     worksheet.Cells[$"J{21 + i}"].Value = articles[i].sumPrice;
+                    worksheet.Cells[$"J{21 + i}"].Style.NumberFormat = "#,##0.00";
+
 
                     if (i == count - 1)
                     {
@@ -258,7 +275,7 @@ namespace Invoice
                         worksheet.Cells[$"J{21+count }"].Formula = $"=Sum({worksheet.Cells["G21"]}:{worksheet.Cells["G"+(21+i)]})";
                         worksheet.Cells[$"J{21+count + 1}"].Formula = $"=Sum({worksheet.Cells["I21"]}:{worksheet.Cells["I"+(21 + i)]})";
                         worksheet.Cells[$"J{21+count + 2}"].Formula = $"=Sum({worksheet.Cells["J21"]}:{worksheet.Cells["J"+ (21 + i)]})";
-                        worksheet.Cells[$"J{21 + count + 3}"].Value = double.Parse(txtAvans.Text);
+                       // worksheet.Cells[$"J{21 + count + 3}"].Value = double.Parse(txtAvans.Text);
                         worksheet.Cells[$"J{21 + count + 4}"].Formula = $"=Sum({worksheet.Cells["J"+(21 + count + 2)]}-{worksheet.Cells["J" + (21 + count + 3)]})";
                         worksheet.Cells[$"D{21 + count + 5}"].Formula = txtAmmountMoneySpell.Text;
 
