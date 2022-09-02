@@ -212,6 +212,8 @@ namespace Invoice
                 && txtUniqueNameOfInvoice.Text != "" && txtCustomerName.Text != "" && txtPIBCustomer.Text != "")
             {
 
+               
+
                 SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
                 var workbook = ExcelFile.Load("template.xlsx");
 
@@ -296,9 +298,17 @@ namespace Invoice
 
                 if (path != "")
                 {
-                    workbook.Save($"{path}{DateTime.Now.ToString("HHmmssMMddyyyy")}.xlsx");
+                    try
+                    {
+                        workbook.Save($"{path}{DateTime.Now.ToString("HHmmssMMddyyyy")}.xlsx");
+                        MessageBox.Show("Uspesno kreiran Račun", "Obaveštenje", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    MessageBox.Show("Uspesno kreiran Račun", "Obaveštenje", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception )
+                    {
+                        MessageBox.Show("Greska", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
                 }
                 else
                 {
