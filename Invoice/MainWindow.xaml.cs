@@ -305,6 +305,8 @@ namespace Invoice
                         string pathFile = $"{path}{DateTime.Now.ToString("HHmmssMMddyyyy")}.xlsx";
                         workbook.Save(pathFile);
                         MessageBox.Show("Uspesno kreiran Račun", "Obaveštenje", MessageBoxButton.OK, MessageBoxImage.Information);
+
+
                         Process process = new Process();
                         process.StartInfo.FileName = pathFile;
                         process.StartInfo.Arguments = "ProcessStart.cs";
@@ -312,10 +314,12 @@ namespace Invoice
                         process.StartInfo.UseShellExecute = true;
                         process.Start();
 
+
+
                     }
                     catch (Exception)
                     {
-                        MessageBox.Show("Greska", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Došlo je do greške", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
 
                 }
@@ -489,17 +493,26 @@ namespace Invoice
             file.ShowDialog();
             if (file.FileName != "")
             {
-                Process process = new Process();
-                process.StartInfo.FileName = file.FileName;
-                process.StartInfo.Arguments = "ProcessStart.cs";
-                process.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
-                process.StartInfo.UseShellExecute = true;
-                process.Start();
-                process.WaitForExit();
+                try
+                {
+                    Process process = new Process();
+                    process.StartInfo.FileName = file.FileName;
+                    process.StartInfo.Arguments = "ProcessStart.cs";
+                    process.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+                    process.StartInfo.UseShellExecute = true;
+                    process.Start();
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Došlo je do greške", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    throw;
+                }
+
             }
             else
             {
-                MessageBox.Show("Greška","Greška",MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show("Greška", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
 
