@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="offers-icon-24.png" />
+    <None Remove="template.xlsx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +25,11 @@
 
   <ItemGroup>
     <Resource Include="offers-icon-24.png" />
+    <Content Include="template.xlsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Invoice.csproj.user" />
   </ItemGroup>
 
 </Project>
