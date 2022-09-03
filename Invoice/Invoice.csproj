@@ -5,10 +5,15 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>401182.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="offers-icon-24.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="401182.ico" />
   </ItemGroup>
 
   <ItemGroup>

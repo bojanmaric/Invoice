@@ -22,7 +22,7 @@ using DocumentFormat.OpenXml;
 using GemBox.Spreadsheet;
 using System.Text.RegularExpressions;
 using DocumentFormat.OpenXml.Wordprocessing;
-using static System.Net.WebRequestMethods;
+
 
 
 namespace Invoice
@@ -210,102 +210,107 @@ namespace Invoice
         {
 
 
-            if (txtDateCreate.SelectedDate != null && txtDateDelivery.SelectedDate != null
-                && txtUniqueNameOfInvoice.Text != "" && txtCustomerName.Text != "" && txtPIBCustomer.Text != "")
+            if (File.Exists("template.xlsx"))
             {
 
 
 
-                SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
-                var workbook = ExcelFile.Load("template.xlsx");
 
-                var worksheet = workbook.Worksheets[0];
+            if (txtDateCreate.SelectedDate != null && txtDateDelivery.SelectedDate != null
+                && txtUniqueNameOfInvoice.Text != "" && txtCustomerName.Text != "" && txtPIBCustomer.Text != "")
+            {
 
-                //data of customer
-
-                worksheet.Cells["G11"].Value = txtCustomerName.Text;
-                worksheet.Cells["G11"].Style.WrapText = true;
-
-                worksheet.Cells["G12"].Value = txtAdressCustomer.Text;
-                worksheet.Cells["G13"].Value = txtCityPlaceCustomer.Text;
-                worksheet.Cells["G14"].Value = txtPIBCustomer.Text;
-
-                //data for header of invoice
-                worksheet.Cells["D8"].Value = txtDateCreate.SelectedDate.Value.Date.ToString("dd-MM-yyyy");
-                worksheet.Cells["D9"].Value = txtDateCreate.SelectedDate.Value.Date.ToString("dd-MM-yyyy");
-                worksheet.Cells["D10"].Value = txtDateDelivery.SelectedDate.Value.Date.ToString("dd-MM-yyyy");
-                worksheet.Cells["F17"].Value = txtUniqueNameOfInvoice.Text;
-
-                //Filling table parts which is predicted for articles in .xlsx
-                int count = articles.Count;
-                for (int i = 0; i < articles.Count; i++)
+                try
                 {
-                    if (i == 0)
+
+
+                    SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+
+                    var workbook = ExcelFile.Load("template.xlsx");
+
+                    var worksheet = workbook.Worksheets[0];
+
+                    //data of customer
+
+                    worksheet.Cells["G11"].Value = txtCustomerName.Text;
+                    worksheet.Cells["G11"].Style.WrapText = true;
+
+                    worksheet.Cells["G12"].Value = txtAdressCustomer.Text;
+                    worksheet.Cells["G13"].Value = txtCityPlaceCustomer.Text;
+                    worksheet.Cells["G14"].Value = txtPIBCustomer.Text;
+
+                    //data for header of invoice
+                    worksheet.Cells["D8"].Value = txtDateCreate.SelectedDate.Value.Date.ToString("dd-MM-yyyy");
+                    worksheet.Cells["D9"].Value = txtDateCreate.SelectedDate.Value.Date.ToString("dd-MM-yyyy");
+                    worksheet.Cells["D10"].Value = txtDateDelivery.SelectedDate.Value.Date.ToString("dd-MM-yyyy");
+                    worksheet.Cells["F17"].Value = txtUniqueNameOfInvoice.Text;
+
+                    //Filling table parts which is predicted for articles in .xlsx
+                    int count = articles.Count;
+                    for (int i = 0; i < articles.Count; i++)
                     {
-                        worksheet.Rows.InsertEmpty(21, count - 1);
+                        if (i == 0)
+                        {
+                            worksheet.Rows.InsertEmpty(21, count - 1);
+                        }
+                        //serial number
+                        worksheet.Cells[$"A{21 + i}"].Value = i + 1;
+                        //ID of article
+                        worksheet.Cells[$"B{21 + i}"].Value = articles[i].idArt;
+                        //name of artilce
+                        worksheet.Cells[$"C{21 + i}"].Value = articles[i].nameArt;
+
+                        worksheet.Cells[$"C{21 + i}"].Style.WrapText = true;
+
+                        //Measure unit of articles
+                        worksheet.Cells[$"D{21 + i}"].Value = articles[i].measureUnit;
+                        //Quantitiy of articles
+                        worksheet.Cells[$"E{21 + i}"].Value = articles[i].quatity;
+                        worksheet.Cells[$"E{21 + i}"].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+
+                        //price of article per one
+                        worksheet.Cells[$"F{21 + i}"].Value = articles[i].price;
+                        worksheet.Cells[$"F{21 + i}"].Style.NumberFormat = "#,##0.00";
+
+                        //poreska osnovica
+                        worksheet.Cells[$"G{21 + i}"].Value = articles[i].poreskaOsnovica;
+                        worksheet.Cells[$"G{21 + i}"].Style.NumberFormat = "#,##0.00";
+
+                        //rate PDV 
+                        worksheet.Cells[$"H{21 + i}"].Value = articles[i].pdvLevel + "%";
+                        worksheet.Cells[$"H{21 + i}"].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+
+                        //sum of pdv
+                        worksheet.Cells[$"I{21 + i}"].Value = articles[i].pdvValue;
+                        worksheet.Cells[$"I{21 + i}"].Style.NumberFormat = "#,##0.00";
+
+                        //Ammount of product 
+                        worksheet.Cells[$"J{21 + i}"].Value = articles[i].sumPrice;
+                        worksheet.Cells[$"J{21 + i}"].Style.NumberFormat = "#,##0.00";
+
+
+                        if (i == count - 1)
+                        {
+                            worksheet.Cells[$"J{21 + count}"].Formula = $"=Sum({worksheet.Cells["G21"]}:{worksheet.Cells["G" + (21 + i)]})";
+                            worksheet.Cells[$"J{21 + count + 1}"].Formula = $"=Sum({worksheet.Cells["I21"]}:{worksheet.Cells["I" + (21 + i)]})";
+                            worksheet.Cells[$"J{21 + count + 2}"].Formula = $"=Sum({worksheet.Cells["J21"]}:{worksheet.Cells["J" + (21 + i)]})";
+                            // worksheet.Cells[$"J{21 + count + 3}"].Value = double.Parse(txtAvans.Text);
+                            worksheet.Cells[$"J{21 + count + 4}"].Formula = $"=Sum({worksheet.Cells["J" + (21 + count + 2)]}-{worksheet.Cells["J" + (21 + count + 3)]})";
+                            worksheet.Cells[$"D{21 + count + 5}"].Formula = txtAmmountMoneySpell.Text;
+
+                        }
+
                     }
-                    //serial number
-                    worksheet.Cells[$"A{21 + i}"].Value = i + 1;
-                    //ID of article
-                    worksheet.Cells[$"B{21 + i}"].Value = articles[i].idArt;
-                    //name of artilce
-                    worksheet.Cells[$"C{21 + i}"].Value = articles[i].nameArt;
 
-                    worksheet.Cells[$"C{21 + i}"].Style.WrapText = true;
+                    string path = getPathNameForNewFile();
 
-                    //Measure unit of articles
-                    worksheet.Cells[$"D{21 + i}"].Value = articles[i].measureUnit;
-                    //Quantitiy of articles
-                    worksheet.Cells[$"E{21 + i}"].Value = articles[i].quatity;
-                    worksheet.Cells[$"E{21 + i}"].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
-
-                    //price of article per one
-                    worksheet.Cells[$"F{21 + i}"].Value = articles[i].price;
-                    worksheet.Cells[$"F{21 + i}"].Style.NumberFormat = "#,##0.00";
-
-                    //poreska osnovica
-                    worksheet.Cells[$"G{21 + i}"].Value = articles[i].poreskaOsnovica;
-                    worksheet.Cells[$"G{21 + i}"].Style.NumberFormat = "#,##0.00";
-
-                    //rate PDV 
-                    worksheet.Cells[$"H{21 + i}"].Value = articles[i].pdvLevel + "%";
-                    worksheet.Cells[$"H{21 + i}"].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
-
-                    //sum of pdv
-                    worksheet.Cells[$"I{21 + i}"].Value = articles[i].pdvValue;
-                    worksheet.Cells[$"I{21 + i}"].Style.NumberFormat = "#,##0.00";
-
-                    //Ammount of product 
-                    worksheet.Cells[$"J{21 + i}"].Value = articles[i].sumPrice;
-                    worksheet.Cells[$"J{21 + i}"].Style.NumberFormat = "#,##0.00";
-
-
-                    if (i == count - 1)
+                    if (path != "")
                     {
 
-                        worksheet.Cells[$"J{21 + count}"].Formula = $"=Sum({worksheet.Cells["G21"]}:{worksheet.Cells["G" + (21 + i)]})";
-                        worksheet.Cells[$"J{21 + count + 1}"].Formula = $"=Sum({worksheet.Cells["I21"]}:{worksheet.Cells["I" + (21 + i)]})";
-                        worksheet.Cells[$"J{21 + count + 2}"].Formula = $"=Sum({worksheet.Cells["J21"]}:{worksheet.Cells["J" + (21 + i)]})";
-                        // worksheet.Cells[$"J{21 + count + 3}"].Value = double.Parse(txtAvans.Text);
-                        worksheet.Cells[$"J{21 + count + 4}"].Formula = $"=Sum({worksheet.Cells["J" + (21 + count + 2)]}-{worksheet.Cells["J" + (21 + count + 3)]})";
-                        worksheet.Cells[$"D{21 + count + 5}"].Formula = txtAmmountMoneySpell.Text;
-
-
-
-                    }
-
-                }
-
-                string path = getPathNameForNewFile();
-
-                if (path != "")
-                {
-                    try
-                    {
                         string pathFile = $"{path}{DateTime.Now.ToString("HHmmssMMddyyyy")}.xlsx";
                         workbook.Save(pathFile);
                         MessageBox.Show("Uspesno kreiran Račun", "Obaveštenje", MessageBoxButton.OK, MessageBoxImage.Information);
-
 
                         Process process = new Process();
                         process.StartInfo.FileName = pathFile;
@@ -314,24 +319,32 @@ namespace Invoice
                         process.StartInfo.UseShellExecute = true;
                         process.Start();
 
-
-
                     }
-                    catch (Exception)
+                    else
                     {
-                        MessageBox.Show("Došlo je do greške", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Niste uneli naziv fajla", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("Niste uneli naziv fajla", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Došlo je do greške", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    throw;
                 }
+
+
             }
             else
             {
                 MessageBox.Show("Niste uneli sva polja", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            }
+            else
+            {
+                MessageBox.Show("template.xlsx file is unavailable!!!\n Please contact you administrator!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+
 
         }
 
