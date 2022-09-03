@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 using Microsoft.Win32;
+using System.Diagnostics;
 using System.IO;
 using SpreadsheetLight;
 using DocumentFormat.OpenXml.Spreadsheet;
@@ -21,6 +22,7 @@ using DocumentFormat.OpenXml;
 using GemBox.Spreadsheet;
 using System.Text.RegularExpressions;
 using DocumentFormat.OpenXml.Wordprocessing;
+using static System.Net.WebRequestMethods;
 
 
 namespace Invoice
@@ -212,7 +214,7 @@ namespace Invoice
                 && txtUniqueNameOfInvoice.Text != "" && txtCustomerName.Text != "" && txtPIBCustomer.Text != "")
             {
 
-               
+
 
                 SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
                 var workbook = ExcelFile.Load("template.xlsx");
@@ -300,11 +302,18 @@ namespace Invoice
                 {
                     try
                     {
-                        workbook.Save($"{path}{DateTime.Now.ToString("HHmmssMMddyyyy")}.xlsx");
+                        string pathFile = $"{path}{DateTime.Now.ToString("HHmmssMMddyyyy")}.xlsx";
+                        workbook.Save(pathFile);
                         MessageBox.Show("Uspesno kreiran Račun", "Obaveštenje", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Process process = new Process();
+                        process.StartInfo.FileName = pathFile;
+                        process.StartInfo.Arguments = "ProcessStart.cs";
+                        process.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+                        process.StartInfo.UseShellExecute = true;
+                        process.Start();
 
                     }
-                    catch (Exception )
+                    catch (Exception)
                     {
                         MessageBox.Show("Greska", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
@@ -337,7 +346,7 @@ namespace Invoice
         private void dataGridInvoice_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var selectedRow = dataGridInvoice.SelectedIndex;
-           
+
             if (selectedRow >= 0)
             {
                 this.selectedCell = true;
@@ -372,7 +381,7 @@ namespace Invoice
                 double poreskaOsnovica = Math.Round((price / ((100 + double.Parse(cmbPDV.SelectedValue.ToString())) / 100)) * articles[idSelectedRow].quatity, 2);
                 double sumCell = Math.Round(price * articles[idSelectedRow].quatity, 2);
                 double pdvValue = Math.Round(sumCell - poreskaOsnovica, 2);
-                
+
                 sumAllPDV = Math.Round(sumAllPDV - pdvValue, 2);
                 summAllAmountOfArticles = Math.Round(summAllAmountOfArticles - sumCell, 2);
                 sumAllPoreskuOsnovicu = Math.Round(sumAllPoreskuOsnovicu - poreskaOsnovica, 2);
@@ -474,6 +483,26 @@ namespace Invoice
             e.Handled = !regex.IsMatch((sender as TextBox).Text.Insert((sender as TextBox).SelectionStart, e.Text));
         }
 
+        private void btnOpen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog file = new OpenFileDialog();
+            file.ShowDialog();
+            if (file.FileName != "")
+            {
+                Process process = new Process();
+                process.StartInfo.FileName = file.FileName;
+                process.StartInfo.Arguments = "ProcessStart.cs";
+                process.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+                process.StartInfo.UseShellExecute = true;
+                process.Start();
+                process.WaitForExit();
+            }
+            else
+            {
+                MessageBox.Show("Greška","Greška",MessageBoxButton.OK,MessageBoxImage.Error);
+            }
 
+
+        }
     }
 }
