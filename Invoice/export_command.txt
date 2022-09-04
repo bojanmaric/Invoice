@@ -1,0 +1,1 @@
+dotnet publish -c Release --self-container -r win-x64 -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true --oputput "name of path where you want to export program"

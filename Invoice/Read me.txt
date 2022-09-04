@@ -1,0 +1,1 @@
+Do not remove template.xlsx file, this file contains all necessary fileds for invoices!!! 
