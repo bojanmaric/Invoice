@@ -15,7 +15,6 @@
      Background="{DynamicResource MaterialDesignPaper}"
      FontFamily="{DynamicResource MaterialDesignFont}"
         
-        
         >
     <Window.FocusVisualStyle>
         <Style/>
