@@ -5,109 +5,511 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Invoice"
         mc:Ignorable="d"
-        Title="KREIRANJE PONUDE" Height="693" Width="954" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ShowInTaskbar="True" Icon="/offers-icon-24.png"
-         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-     TextElement.FontWeight="Regular"
-     TextElement.FontSize="13"
-     TextOptions.TextFormattingMode="Ideal"
-     TextOptions.TextRenderingMode="Auto"
-     Background="{DynamicResource MaterialDesignPaper}"
-     FontFamily="{DynamicResource MaterialDesignFont}"
-        
-        >
-    <Window.FocusVisualStyle>
-        <Style/>
-    </Window.FocusVisualStyle>
-    <Grid x:Name="winmain" Margin="0,0,0,37" Initialized="winmain_Initialized">
+        Title="KREIRANJE PONUDE"
+        Height="693"
+        Width="954"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="True"
+        Icon="/offers-icon-24.png"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <!--<Window.FocusVisualStyle>
+        <Style />
+    </Window.FocusVisualStyle>-->
+    <Grid x:Name="winmain"
+          Margin="0,0,0,37"
+          Initialized="winmain_Initialized">
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Label Content="File" HorizontalAlignment="Left" Margin="16,6,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.347,0.537" Height="26" Width="28"/>
+        <Label Content="File"
+               HorizontalAlignment="Left"
+               Margin="16,6,0,0"
+               VerticalAlignment="Top"
+               RenderTransformOrigin="0.347,0.537"
+               Height="26"
+               Width="28" />
 
-        <TextBox x:Name="txtFile" HorizontalAlignment="Left" Margin="49,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" IsEnabled="False" Height="27"/>
-        <Button x:Name="btnFile" Content="..." HorizontalAlignment="Left" Cursor="Hand" Margin="254,8,0,0" VerticalAlignment="Top" Width="47" Height="27" IsEnabled="False"/>
-        <DataGrid x:Name="dataGridInvoice" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="19,350,20,-17" MouseDoubleClick="dataGridInvoice_MouseDoubleClick"/>
-        <Label Content="Šifra artikla" HorizontalAlignment="Left" Margin="19,137,0,0" VerticalAlignment="Top" Width="84" Height="26"/>
-        <TextBox x:Name="txtIDArticle" TabIndex="0" HorizontalAlignment="Left" Margin="19,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="67" Height="31" FontSize="16" FontWeight="Bold"/>
-        <TextBox x:Name="txtNameArt"  TabIndex="1" HorizontalAlignment="Left" Margin="100,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="201" Height="31" FontSize="16"  FontWeight="Bold"/>
-        <Label Content="Naziv artikla*" HorizontalAlignment="Left" Margin="154,136,0,0" VerticalAlignment="Top" Height="26" Width="90" FontWeight="Bold"/>
-        <Label Content="%PDV" HorizontalAlignment="Left" Margin="235,207,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.54,0.533" Height="26" Width="43"/>
-        <ComboBox x:Name="cmbPDV" HorizontalAlignment="Left" Margin="231,233,0,0" Cursor="Hand" VerticalAlignment="Top" Width="51" Height="31" FontSize="18"/>
+        <TextBox x:Name="txtFile"
+                 HorizontalAlignment="Left"
+                 Margin="49,8,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="200"
+                 IsEnabled="False"
+                 Height="27" />
+        <!--<Button x:Name="btnFile" Content="..." HorizontalAlignment="Left" Cursor="Hand" Margin="254,8,0,0" VerticalAlignment="Top" Width="47" Height="27" IsEnabled="False"/>-->
+        <Border  Margin="254,8,0,0"
+                 VerticalAlignment="Top"
+                 Width="47"
+                 Height="27"
+                 HorizontalAlignment="Left">
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect ShadowDepth="4"
+                                        Opacity=".4" />
+            </Border.BitmapEffect>
+            <Grid>
+                <Rectangle x:Name="recImported"
+                           Fill="#FFDA3929">
+
+                    <Rectangle.Clip>
+                        <RectangleGeometry Rect="0,0,47,27"
+                                           RadiusX="5"
+                                           RadiusY="5" />
+                    </Rectangle.Clip>
+                </Rectangle>
+                <materialDesign:PackIcon x:Name="importIcon"
+                                         Width="27"
+                                         Height="27"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Foreground="#ffffff"
+                                         Kind="AlphaX" />
+            </Grid>
 
 
-        <Label Content="J/M" HorizontalAlignment="Left" Margin="38,207,0,0" VerticalAlignment="Top" Height="24" RenderTransformOrigin="0.451,1.226" Width="30"/>
-        <ComboBox x:Name="cmbMeasureUnit" HorizontalAlignment="Left" Margin="19,233,0,0" Cursor="Hand" VerticalAlignment="Top" Width="67" Height="31" FontSize="18"/>
-        <Label Content="Količina*" HorizontalAlignment="Left" Margin="125,206,0,0" VerticalAlignment="Top" Height="26" Width="63" FontWeight="Bold"/>
-        <TextBox x:Name="txtQuantity" TabIndex="3" HorizontalAlignment="Left" Margin="99,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="31" FontSize="16" FontWeight="Bold" PreviewTextInput="txtQuantity_PreviewTextInput"/>
-        <TextBox x:Name="txtAmountOfAllAcrticles" HorizontalAlignment="Left" Margin="632,303,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135" IsEnabled="False" Height="31" BorderBrush="#FF4B8C19" BorderThickness="2,2,2,2"/>
-        <TextBox x:Name="txtNetoSum" HorizontalAlignment="Left" Margin="359,303,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="31" BorderBrush="#FF4B8C19" BorderThickness="2,2,2,2" IsEnabled="False"/>
-        <TextBox x:Name="txtPdvSum" HorizontalAlignment="Right" Margin="0,303,312,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="113" Height="31" IsEnabled="False" BorderBrush="#FF4B8C19" BorderThickness="2,2,2,2"/>
-        <Label Content="Cena Bez PDV-a" HorizontalAlignment="Left" Margin="367,278,0,0" VerticalAlignment="Top" Height="26" Width="101" RenderTransformOrigin="0.595,0.623"/>
-        <Label Content="PDV Ukupno" Margin="0,277,332,0" VerticalAlignment="Top" Height="26" HorizontalAlignment="Right" Width="80"/>
-        <Label Content="Bruto" HorizontalAlignment="Left" Margin="679,278,0,0" VerticalAlignment="Top" Height="26" Width="42">
+        </Border>
+
+        <DataGrid x:Name="dataGridInvoice"
+                  d:ItemsSource="{d:SampleData ItemCount=5}"
+                  Margin="19,350,20,-17"
+                  MouseDoubleClick="dataGridInvoice_MouseDoubleClick" />
+        <Label Content="Šifra artikla"
+               HorizontalAlignment="Left"
+               Margin="19,137,0,0"
+               VerticalAlignment="Top"
+               Width="84"
+               Height="26" />
+        <TextBox x:Name="txtIDArticle"
+                 TabIndex="0"
+                 HorizontalAlignment="Left"
+                 Margin="19,163,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="67"
+                 Height="31"
+                 FontSize="16"
+                 FontWeight="Bold"
+                 KeyUp="txtIDArticle_KeyUp" />
+        <TextBox x:Name="txtNameArt"
+                 TabIndex="1"
+                 HorizontalAlignment="Left"
+                 Margin="100,163,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="201"
+                 Height="31"
+                 FontSize="16"
+                 FontWeight="Bold"
+                 KeyUp="txtNameArt_KeyUp" />
+        <Label Content="Naziv artikla*"
+               HorizontalAlignment="Left"
+               Margin="154,136,0,0"
+               VerticalAlignment="Top"
+               Height="26"
+               Width="90"
+               FontWeight="Bold" />
+        <Label Content="%PDV"
+               HorizontalAlignment="Left"
+               Margin="235,207,0,0"
+               VerticalAlignment="Top"
+               RenderTransformOrigin="-0.54,0.533"
+               Height="26"
+               Width="43" />
+        <ComboBox x:Name="cmbPDV"
+                  HorizontalAlignment="Left"
+                  Margin="231,233,0,0"
+                  Cursor="Hand"
+                  VerticalAlignment="Top"
+                  Width="51"
+                  Height="31"
+                  FontSize="18" />
+
+
+        <Label Content="J/M"
+               HorizontalAlignment="Left"
+               Margin="38,207,0,0"
+               VerticalAlignment="Top"
+               Height="24"
+               RenderTransformOrigin="0.451,1.226"
+               Width="30" />
+        <ComboBox x:Name="cmbMeasureUnit"
+                  HorizontalAlignment="Left"
+                  Margin="19,233,0,0"
+                  Cursor="Hand"
+                  VerticalAlignment="Top"
+                  Width="67"
+                  Height="31"
+                  FontSize="18" />
+        <Label Content="Količina*"
+               HorizontalAlignment="Left"
+               Margin="125,206,0,0"
+               VerticalAlignment="Top"
+               Height="26"
+               Width="63"
+               FontWeight="Bold" />
+        <TextBox x:Name="txtQuantity"
+                 TabIndex="3"
+                 HorizontalAlignment="Left"
+                 Margin="99,233,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="120"
+                 Height="31"
+                 FontSize="16"
+                 FontWeight="Bold"
+                 PreviewTextInput="txtQuantity_PreviewTextInput"
+                 KeyUp="txtQuantity_KeyUp" />
+        <TextBox x:Name="txtAmountOfAllAcrticles"
+                 HorizontalAlignment="Left"
+                 Margin="632,303,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="135"
+                 IsEnabled="False"
+                 Height="31"
+                 BorderBrush="#FF4B8C19"
+                 BorderThickness="2,2,2,2" />
+        <TextBox x:Name="txtNetoSum"
+                 HorizontalAlignment="Left"
+                 Margin="359,303,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="120"
+                 Height="31"
+                 BorderBrush="#FF4B8C19"
+                 BorderThickness="2,2,2,2"
+                 IsEnabled="False" />
+        <TextBox x:Name="txtPdvSum"
+                 HorizontalAlignment="Right"
+                 Margin="0,303,312,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="113"
+                 Height="31"
+                 IsEnabled="False"
+                 BorderBrush="#FF4B8C19"
+                 BorderThickness="2,2,2,2" />
+        <Label Content="Cena Bez PDV-a"
+               HorizontalAlignment="Left"
+               Margin="367,278,0,0"
+               VerticalAlignment="Top"
+               Height="26"
+               Width="101"
+               RenderTransformOrigin="0.595,0.623" />
+        <Label Content="PDV Ukupno"
+               Margin="0,277,332,0"
+               VerticalAlignment="Top"
+               Height="26"
+               HorizontalAlignment="Right"
+               Width="80" />
+        <Label Content="Bruto"
+               HorizontalAlignment="Left"
+               Margin="679,278,0,0"
+               VerticalAlignment="Top"
+               Height="26"
+               Width="42">
             <UIElement.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform />
+                    <TranslateTransform />
                 </TransformGroup>
             </UIElement.RenderTransform>
         </Label>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="230" Margin="590,36,0,0" VerticalAlignment="Top" Width="335">
-            <TextBox x:Name="txtPIBCustomer" TextWrapping="Wrap" Margin="71,48,21,152" FontSize="16"/>
+        <Border BorderBrush="Black"
+                BorderThickness="1"
+                HorizontalAlignment="Left"
+                Height="230"
+                Margin="590,36,0,0"
+                VerticalAlignment="Top"
+                Width="335">
+            <TextBox x:Name="txtPIBCustomer"
+                     TextWrapping="Wrap"
+                     Margin="71,48,21,152"
+                     FontSize="16" />
 
         </Border>
-        <Label Content="PIB*" HorizontalAlignment="Left" Margin="606,86,0,0" VerticalAlignment="Top" Width="40" Height="26" RenderTransformOrigin="0.48,0.548" FontWeight="Bold"/>
-        <Label Content="KUPAC" HorizontalAlignment="Left" Margin="716,6,0,0" VerticalAlignment="Top" Width="60" FontSize="16" Height="31" FontWeight="Bold"/>
-        <Label Content="Naziv*" HorizontalAlignment="Left" Margin="601,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.436,0.545" Height="26" Width="56" FontWeight="Bold"/>
-        <Button x:Name="btnAddCustomer" Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" 
-                Cursor="Hand" Content="DODAJ " HorizontalAlignment="Left" Margin="764,214,0,0" VerticalAlignment="Top" Height="35" Width="135" IsEnabled="False"/>
-        <TextBox x:Name="txtCustomerName" HorizontalAlignment="Left" Margin="662,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="241" Height="28" FontSize="16" />
-        <Button x:Name="btnFindCustomers" Cursor="Hand" Content="PRONADJI" 
-                
-                HorizontalAlignment="Left" Margin="606,214,0,0" VerticalAlignment="Top" Height="35" Width="146" IsEnabled="False" Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" />
-        <DatePicker x:Name="txtDateCreate" HorizontalAlignment="Left"  BorderThickness="2,2,2,2" BorderBrush="#FFD10017" Cursor="Hand" Margin="341,53,0,0" VerticalAlignment="Top" Height="29" Width="127" />
-        <DatePicker x:Name="txtDateDelivery" Cursor="Hand" BorderThickness="2,2,2,2" BorderBrush="#FFD10017" HorizontalAlignment="Left" Margin="341,107,0,0" VerticalAlignment="Top" Height="29
-                    " Width="127" />
-        <Label Content="Datum Plaćanja*" HorizontalAlignment="Left" Margin="367,84,0,0" VerticalAlignment="Top" Width="116" Height="26" FontWeight="Bold"/>
-        <Label Content="Datum Izdavanja*" HorizontalAlignment="Left" Margin="367,29,0,0" VerticalAlignment="Top" Width="122" Height="26" FontWeight="Bold"/>
-        <Button x:Name="btnOpenInvoice" Content="UČITAJ FAKTURU" HorizontalAlignment="Left" Margin="19,41,0,0" Cursor="Hand" 
+        <Label Content="PIB*"
+               HorizontalAlignment="Left"
+               Margin="606,86,0,0"
+               VerticalAlignment="Top"
+               Width="40"
+               Height="26"
+               RenderTransformOrigin="0.48,0.548"
+               FontWeight="Bold" />
+        <Label Content="KUPAC"
+               HorizontalAlignment="Left"
+               Margin="716,6,0,0"
+               VerticalAlignment="Top"
+               Width="60"
+               FontSize="16"
+               Height="31"
+               FontWeight="Bold" />
+        <Label Content="Naziv*"
+               HorizontalAlignment="Left"
+               Margin="601,47,0,0"
+               VerticalAlignment="Top"
+               RenderTransformOrigin="0.436,0.545"
+               Height="26"
+               Width="56"
+               FontWeight="Bold" />
+        <Button x:Name="btnAddCustomer"
                 Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
-                VerticalAlignment="Top" Height="24" Width="282" IsEnabled="False"/>
-        <Button x:Name="btnCreateOffer" Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" Content="KREIRAJ" Cursor="Hand" HorizontalAlignment="Left"
-                Margin="782,275,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.293,-0.731" Height="57" Width="131" 
-                FontSize="14" Click="btnCreateOffer_Click"
-                />
-        <Button x:Name="btnAddCell" TabIndex="4" Content=" DODAJ&#xA;STAVKU" Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" HorizontalAlignment="Left" Margin="375,219,0,0" VerticalAlignment="Top" 
-                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" 
-                Height="45" Width="207" Background="#FF2C6AEE" FontStretch="Normal" FlowDirection="LeftToRight"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Hand" Click="btnAddCell_Click" BorderBrush="#FFA7A2EA" BorderThickness="0,0,0,0"/>
-        <Label Content="BROJ FAKTURE*" HorizontalAlignment="Left" Margin="100,70,0,0" VerticalAlignment="Top" FontFamily="Tw Cen MT Condensed Extra Bold" FontSize="20" Height="31" Width="149"/>
-        <TextBox x:Name="txtUniqueNameOfInvoice"  HorizontalAlignment="Left" Margin="48,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="234" Height="30" FontSize="16"   />
-        <Button x:Name="btnUpdateCell" Content=" IZMENI &#xA;STAVKU" Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" Cursor="Hand" HorizontalAlignment="Left"   
-                FontStretch="Normal" Margin="483,53,0,0" VerticalAlignment="Top" Height="44" Width="100"   BorderThickness="0,0,0,0" Click="btnUpdateCell_Click" Background="#FFE6821D" IsEnabled="False"/>
-        <Button x:Name="btnDeleteCell" Content="IZBRIŠI &#xD;&#xA;STAVKU"  Cursor="Hand" HorizontalAlignment="Left" 
-                 Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
-                Margin="484,106,0,0" VerticalAlignment="Top" Height="44" Width="98" Background="#FFDA3929"  BorderThickness="0,0,0,0" Click="btnDeleteCell_Click" IsEnabled="False"/>
-        <TextBox x:Name="txtPriceArt" TabIndex="2" HorizontalAlignment="Left" Margin="316,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" Height="31" FontSize="16"  FontWeight="Bold" AutomationProperties.ItemType="double" PreviewTextInput="txtPriceArt_PreviewTextInput"/>
-        <Label Content="Cena artikla*" HorizontalAlignment="Left" Margin="341,136,0,0" VerticalAlignment="Top" Height="26" Width="84" FontWeight="Bold"/>
-        <TextBox x:Name="txtAdressCustomer" HorizontalAlignment="Left" Margin="661,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" Height="28" FontSize="16" />
-        <Label Content="Aredsa" HorizontalAlignment="Left" Margin="601,125,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtCityPlaceCustomer" HorizontalAlignment="Left" Margin="662,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="241" Height="25" FontSize="16" />
-        <Label Content="Mesto" HorizontalAlignment="Left" Margin="604,163,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtAvans"  HorizontalAlignment="Left" Margin="19,303,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="112" Height="31" FontSize="16"  FontWeight="Bold" PreviewTextInput="txtAvans_PreviewTextInput"/>
-        <Label Content="Avans" HorizontalAlignment="Left" Margin="48,275,0,0" VerticalAlignment="Top" Width="61"/>
-        <Label Content="Cena Slovima" HorizontalAlignment="Left" Margin="196,272,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtAmmountMoneySpell"   HorizontalAlignment="Left" Margin="146,303,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="197" Height="31" FontSize="16"  FontWeight="Bold"/>
-        <TextBox x:Name="txtDiscount" TabIndex="0" HorizontalAlignment="Left" Margin="310,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45" Height="31" FontSize="16"  FontWeight="Bold" IsEnabled="False"/>
-        <Label x:Name="Rabat" Content="Rabat" HorizontalAlignment="Left" Margin="314,206,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnCancel" Content="OTKAŽI" HorizontalAlignment="Left" Margin="484,163,0,0" VerticalAlignment="Top" Width="98" Height="36" BorderThickness="0,0,0,0" IsEnabled="False" Click="btnCancel_Click"/>
-        <Button x:Name="btnOpen" Content="Pogledaj&#xD;&#xA; Fakturu" HorizontalAlignment="Left" Margin="483,8,0,0" VerticalAlignment="Top" FontSize="11" Click="btnOpen_Click" Width="100" Height="38"/>
+                Cursor="Hand"
+                Content="DODAJ "
+                HorizontalAlignment="Left"
+                Margin="764,214,0,0"
+                VerticalAlignment="Top"
+                Height="35"
+                Width="135"
+                IsEnabled="False" />
+        <TextBox x:Name="txtCustomerName"
+                 HorizontalAlignment="Left"
+                 Margin="662,45,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="241"
+                 Height="28"
+                 FontSize="16" />
+        <Button x:Name="btnFindCustomers"
+                Cursor="Hand"
+                Content="PRONADJI"
+                HorizontalAlignment="Left"
+                Margin="606,214,0,0"
+                VerticalAlignment="Top"
+                Height="35"
+                Width="146"
+                IsEnabled="False"
+                Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" />
+        <DatePicker x:Name="txtDateCreate"
+                    HorizontalAlignment="Left"
+                    BorderThickness="2,2,2,2"
+                    BorderBrush="#FFD10017"
+                    Cursor="Hand"
+                    Margin="341,53,0,0"
+                    VerticalAlignment="Top"
+                    Height="29"
+                    Width="127" />
+        <DatePicker x:Name="txtDateDelivery"
+                    Cursor="Hand"
+                    BorderThickness="2,2,2,2"
+                    BorderBrush="#FFD10017"
+                    HorizontalAlignment="Left"
+                    Margin="341,107,0,0"
+                    VerticalAlignment="Top"
+                    Height="29
+                    "
+                    Width="127" />
+        <Label Content="Datum Plaćanja*"
+               HorizontalAlignment="Left"
+               Margin="367,84,0,0"
+               VerticalAlignment="Top"
+               Width="116"
+               Height="26"
+               FontWeight="Bold" />
+        <Label Content="Datum Izdavanja*"
+               HorizontalAlignment="Left"
+               Margin="367,29,0,0"
+               VerticalAlignment="Top"
+               Width="122"
+               Height="26"
+               FontWeight="Bold" />
+        <Button x:Name="btnOpenInvoice"
+                Content="UČITAJ ARTIKLE"
+                HorizontalAlignment="Left"
+                Margin="19,41,0,0"
+                Cursor="Hand"
+                Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                VerticalAlignment="Top"
+                Height="24"
+                Width="282"
+                Click="btnOpenInvoice_Click" />
+        <Button x:Name="btnCreateOffer"
+                Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                Content="    KREIRAJ &#xD;&#xA;PROFAKTURU"
+               
+                Cursor="Hand"
+                HorizontalAlignment="Left"
+                Margin="782,275,0,0"
+                VerticalAlignment="Top"
+                RenderTransformOrigin="0.293,-0.731"
+                Height="57"
+                Width="143"
+                FontSize="14"
+                Click="btnCreateOffer_Click" />
+        <Button x:Name="btnAddCell"
+                TabIndex="4"
+                Content=" DODAJ&#xA;STAVKU"
+                Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                HorizontalAlignment="Left"
+                Margin="375,219,0,0"
+                VerticalAlignment="Top"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                Height="45"
+                Width="207"
+                Background="#FF2C6AEE"
+                FontStretch="Normal"
+                FlowDirection="LeftToRight"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                Cursor="Hand"
+                Click="btnAddCell_Click"
+                BorderBrush="#FFA7A2EA"
+                BorderThickness="0,0,0,0" />
+        <Label Content="BROJ PROFAKTURE*"
+               HorizontalAlignment="Left"
+               Margin="80,75,0,0"
+               VerticalAlignment="Top"
+               FontFamily="Tw Cen MT Condensed Extra Bold"
+               FontSize="20"
+               Height="31"
+               Width="170" />
+        <TextBox x:Name="txtUniqueNameOfInvoice"
+                 HorizontalAlignment="Left"
+                 Margin="48,106,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="234"
+                 Height="30"
+                 FontSize="16" />
+        <Button x:Name="btnUpdateCell"
+                Content=" IZMENI &#xA;STAVKU"
+                Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                Cursor="Hand"
+                HorizontalAlignment="Left"
+                FontStretch="Normal"
+                Margin="483,53,0,0"
+                VerticalAlignment="Top"
+                Height="44"
+                Width="100"
+                BorderThickness="0,0,0,0"
+                Click="btnUpdateCell_Click"
+                Background="#FFE6821D"
+                IsEnabled="False" />
+        <Button x:Name="btnDeleteCell"
+                Content="IZBRIŠI &#xD;&#xA;STAVKU"
+                Cursor="Hand"
+                HorizontalAlignment="Left"
+                Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                Margin="484,106,0,0"
+                VerticalAlignment="Top"
+                Height="44"
+                Width="98"
+                Background="#FFDA3929"
+                BorderThickness="0,0,0,0"
+                Click="btnDeleteCell_Click"
+                IsEnabled="False" />
+        <TextBox x:Name="txtPriceArt"
+                 TabIndex="2"
+                 HorizontalAlignment="Left"
+                 Margin="316,163,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="152"
+                 Height="31"
+                 FontSize="16"
+                 FontWeight="Bold"
+                 AutomationProperties.ItemType="double"
+                 PreviewTextInput="txtPriceArt_PreviewTextInput"
+                 KeyUp="txtPriceArt_KeyUp" />
+        <Label Content="Cena artikla*"
+               HorizontalAlignment="Left"
+               Margin="341,136,0,0"
+               VerticalAlignment="Top"
+               Height="26"
+               Width="84"
+               FontWeight="Bold" />
+        <TextBox x:Name="txtAdressCustomer"
+                 HorizontalAlignment="Left"
+                 Margin="661,123,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="242"
+                 Height="28"
+                 FontSize="16" />
+        <Label Content="Aredsa"
+               HorizontalAlignment="Left"
+               Margin="601,125,0,0"
+               VerticalAlignment="Top" />
+        <TextBox x:Name="txtCityPlaceCustomer"
+                 HorizontalAlignment="Left"
+                 Margin="662,163,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="241"
+                 Height="25"
+                 FontSize="16" />
+        <Label Content="Mesto"
+               HorizontalAlignment="Left"
+               Margin="604,163,0,0"
+               VerticalAlignment="Top" />
+        <TextBox x:Name="txtAvans"
+                 HorizontalAlignment="Left"
+                 Margin="19,303,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="112"
+                 Height="31"
+                 FontSize="16"
+                 FontWeight="Bold"
+                 PreviewTextInput="txtAvans_PreviewTextInput" />
+        <Label Content="Avans"
+               HorizontalAlignment="Left"
+               Margin="48,275,0,0"
+               VerticalAlignment="Top"
+               Width="61" />
+        <Label Content="Cena Slovima"
+               HorizontalAlignment="Left"
+               Margin="196,272,0,0"
+               VerticalAlignment="Top" />
+        <TextBox x:Name="txtAmmountMoneySpell"
+                 HorizontalAlignment="Left"
+                 Margin="146,303,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="197"
+                 Height="31"
+                 FontSize="16"
+                 FontWeight="Bold" />
+        <TextBox x:Name="txtDiscount"
+                 TabIndex="0"
+                 HorizontalAlignment="Left"
+                 Margin="310,233,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="45"
+                 Height="31"
+                 FontSize="16"
+                 FontWeight="Bold"
+                 IsEnabled="False" />
+        <Label x:Name="Rabat"
+               Content="Rabat"
+               HorizontalAlignment="Left"
+               Margin="314,206,0,0"
+               VerticalAlignment="Top" />
+        <Button x:Name="btnCancel"
+                Content="OTKAŽI"
+                HorizontalAlignment="Left"
+                Margin="484,163,0,0"
+                VerticalAlignment="Top"
+                Width="98"
+                Height="36"
+                BorderThickness="0,0,0,0"
+                IsEnabled="False"
+                Click="btnCancel_Click" />
+        <!--<Button x:Name="btnOpen" Content="Pogledaj&#xD;&#xA; Fakturu" HorizontalAlignment="Left" Margin="483,8,0,0" VerticalAlignment="Top" FontSize="11" Click="btnOpen_Click" Width="100" Height="38"/>-->
 
     </Grid>
 </Window>
