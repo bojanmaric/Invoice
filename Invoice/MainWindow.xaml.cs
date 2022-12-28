@@ -101,7 +101,6 @@ namespace Invoice
             InitializeComponent();
             onStocks = new List<ArticalOnStock>();
             articles = new List<Article>();
-
         }
 
         //initialiye fields in the Gui part(grid view, combo boxs...)
@@ -163,8 +162,6 @@ namespace Invoice
             {
                 MessageBox.Show("Morate popuniti sva polja!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-
         }
         /*  public void displayDataFromStock()
           {
@@ -291,22 +288,15 @@ namespace Invoice
         private void btnCreateOffer_Click(object sender, RoutedEventArgs e)
         {
 
-
             if (File.Exists("template.xlsx"))
             {
-
-
-
                 if (txtDateCreate.SelectedDate != null && txtDateDelivery.SelectedDate != null
                     && txtUniqueNameOfInvoice.Text != "" && txtCustomerName.Text != "" && txtPIBCustomer.Text != "")
                 {
 
                     try
                     {
-
-
                         SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
-
 
                         var workbook = ExcelFile.Load("template.xlsx");
 
@@ -379,7 +369,6 @@ namespace Invoice
                                 // worksheet.Cells[$"J{21 + count + 3}"].Value = double.Parse(txtAvans.Text);
                                 worksheet.Cells[$"J{21 + count + 4}"].Formula = $"=Sum({worksheet.Cells["J" + (21 + count + 2)]}-{worksheet.Cells["J" + (21 + count + 3)]})";
                                 worksheet.Cells[$"D{21 + count + 5}"].Formula = txtAmmountMoneySpell.Text;
-
                             }
 
                         }
@@ -388,7 +377,6 @@ namespace Invoice
 
                         if (path != "")
                         {
-
                             string pathFile = $"{path}{DateTime.Now.ToString("HHmmssMMddyyyy")}.xlsx";
                             workbook.Save(pathFile);
                             MessageBox.Show("Uspesno kreiran Račun", "Obaveštenje", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -412,8 +400,6 @@ namespace Invoice
 
                         throw;
                     }
-
-
                 }
                 else
                 {
@@ -423,10 +409,7 @@ namespace Invoice
             else
             {
                 MessageBox.Show("template.xlsx file is unavailable!!!\n Please contact you administrator!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-
             }
-
-
         }
 
         // Empty all textboxes which are filled with data
@@ -521,9 +504,7 @@ namespace Invoice
 
                 emptyRow();
                 ResetBtn();
-
             }
-
         }
         // Delete selected row in data grid
         private void btnDeleteCell_Click(object sender, RoutedEventArgs e)
@@ -546,7 +527,6 @@ namespace Invoice
                 ResetBtn();
                 emptyRow();
             }
-
         }
         public void ResetBtn()
         {
@@ -595,38 +575,31 @@ namespace Invoice
                     process.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
                     process.StartInfo.UseShellExecute = true;
                     process.Start();
-
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("Došlo je do greške", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                     throw;
                 }
-
             }
             else
             {
                 MessageBox.Show("Greška", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-
         }
 
         private void btnOpenInvoice_Click(object sender, RoutedEventArgs e)
         {
-
-
             OpenFileDialog file = new OpenFileDialog();
             file.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
             file.ShowDialog();
-
 
             if (file.FileName != "")
             {
                 txtFile.Text = file.FileName;
                 try
                 {
-
                     dynamic fajl = JsonConvert.DeserializeObject(File.ReadAllText(file.FileName));
 
                     foreach (var art in fajl)
@@ -640,12 +613,7 @@ namespace Invoice
                             naziv = art["naziv"],
                             sifra = art["sifra"],
                             vrsta_artikla = art["vrsta_artikla"]
-
-
                         });
-
-
-
                     }
                     if (onStocks.Count > 0)
                     {
@@ -654,51 +622,35 @@ namespace Invoice
                         recImported.Fill = brush;
 
                         importIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Check;
-
                     }
                     txtIDArticle.Focus();
-
-
                 }
                 catch (Exception error)
                 {
-
-
                     MessageBox.Show("Došlo je do greške", "Greška", MessageBoxButton.OK, MessageBoxImage.Information);
                     throw;
                 }
-
             }
             else
             {
                 MessageBox.Show("Morate izabrati .json file", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         private void txtIDArticle_KeyUp(object sender, KeyEventArgs e)
         {
-
             if (e.Key == System.Windows.Input.Key.Enter)
             {
-
                 foreach (ArticalOnStock article in onStocks)
                 {
                     if (article.barkod == txtIDArticle.Text)
                     {
-
                         txtNameArt.Text = article.naziv;
                         txtPriceArt.Text = article.cena.ToString();
-
-
                     }
-
                 }
-
-
                 txtNameArt.SelectAll();
                 txtNameArt.Focus();
-
             }
         }
 
@@ -707,7 +659,6 @@ namespace Invoice
             if (e.Key == System.Windows.Input.Key.Enter)
             {
                 btnAddCell_Click(sender, e);
-
             }
         }
 
@@ -717,7 +668,6 @@ namespace Invoice
             {
                 txtPriceArt.SelectAll();
                 txtPriceArt.Focus();
-
             }
         }
 
@@ -727,7 +677,6 @@ namespace Invoice
             {
                 txtQuantity.SelectAll();
                 txtQuantity.Focus();
-
             }
         }
     }
