@@ -339,7 +339,6 @@
         <Button x:Name="btnCreateOffer"
                 Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
                 Content="    KREIRAJ &#xD;&#xA;PROFAKTURU"
-               
                 Cursor="Hand"
                 HorizontalAlignment="Left"
                 Margin="782,275,0,0"
