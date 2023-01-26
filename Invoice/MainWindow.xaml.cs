@@ -24,6 +24,7 @@ using System.Text.RegularExpressions;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
 using Color = System.Windows.Media.Color;
+using Invoice.View;
 
 namespace Invoice
 {
@@ -446,6 +447,7 @@ namespace Invoice
                 btnDeleteCell.IsEnabled = true;
                 btnCancel.IsEnabled = true;
                 btnAddCell.IsEnabled = false;
+                btnSelectArtikal.IsEnabled = false;
 
             }
         }
@@ -534,6 +536,10 @@ namespace Invoice
             btnDeleteCell.IsEnabled = false;
             btnCancel.IsEnabled = false;
             btnAddCell.IsEnabled = true;
+            if (onStocks.Count > 0)
+            {
+                btnSelectArtikal.IsEnabled = true;
+            }
         }
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -622,6 +628,7 @@ namespace Invoice
                         recImported.Fill = brush;
 
                         importIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Check;
+                        btnSelectArtikal.IsEnabled = true;
                     }
                     txtIDArticle.Focus();
                 }
@@ -677,6 +684,24 @@ namespace Invoice
             {
                 txtQuantity.SelectAll();
                 txtQuantity.Focus();
+            }
+        }
+
+        private void btnSelectArtikal_Click(object sender, RoutedEventArgs e)
+        {
+            if (onStocks.Count > 0)
+            {
+                ArticlesWIndow artikalWindow = new ArticlesWIndow(onStocks);
+
+                artikalWindow.ShowDialog();
+                if (artikalWindow.IsClosed && artikalWindow.selectedArticle!=null)
+                {
+                    txtNameArt.Text = artikalWindow.txtNaziv.Text;
+                    txtIDArticle.Text = artikalWindow.txtSifra.Text;
+                    txtPriceArt.Text = artikalWindow.txtCena.Text;
+                    txtQuantity.Text = artikalWindow.txtKolicina.Text;
+                }
+
             }
         }
     }
